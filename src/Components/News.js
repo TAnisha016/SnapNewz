@@ -30,7 +30,7 @@ export class News extends Component {
 
     async componentDidMount() {
         try {
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d3185dcc67af42079fa72db21b2b7bb9&page=1&pageSize=${this.props.pageSize}`;
+            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3925fb8ea05a4ece8fdeca964691785a&page=1&pageSize=${this.props.pageSize}`;
             this.setState({loading:true});
             let data = await fetch(url);
             let parsedData = await data.json();
@@ -45,7 +45,7 @@ export class News extends Component {
     }
 
     handlePrevClick = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d3185dcc67af42079fa72db21b2b7bb9&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3925fb8ea05a4ece8fdeca964691785a&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
         this.setState({loading:true});
         let data = await fetch(url);
         let parsedData = await data.json();
@@ -57,7 +57,7 @@ export class News extends Component {
     };
 
     handleNextClick = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d3185dcc67af42079fa72db21b2b7bb9&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3925fb8ea05a4ece8fdeca964691785a&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
         this.setState({loading:true});
         let data = await fetch(url);
         let parsedData = await data.json();
@@ -70,12 +70,15 @@ export class News extends Component {
 
     render() {
         return (
+            
             <div className='container my-3'>
                 <h1 className='text-center' style={{ margin: '40px 0px', marginTop:'90px' }}>
                     <span style={{ color: 'yellow' }}>SnapNewz</span>
                     <span style={{ color: 'white' }}> - Top Headlines</span>
                 </h1>
+                
                 {this.state.loading && <Spinner/>}
+                
                 <div className="row">
                     {!this.state.loading && this.state.articles && this.state.articles.map((element) => (
                         <div className="col-md-4" key={element.url}>
@@ -110,6 +113,9 @@ export class News extends Component {
         );
     }
 }
+
+
+
 
 export default News;
 
