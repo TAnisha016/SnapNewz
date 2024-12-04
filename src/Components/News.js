@@ -74,8 +74,12 @@ export class News extends Component {
             <div className='container my-3'>
                 <h1 className='text-center' style={{ margin: '40px 0px', marginTop:'90px' }}>
                     <span style={{ color: 'yellow' }}>SnapNewz</span>
-                    <span style={{ color: 'white' }}> - Top Headlines</span>
+                    <span style={{ color: 'white' }}> - News at Your Snap! </span>
                 </h1>
+               
+
+
+
                 
                 {this.state.loading && <Spinner/>}
                 
