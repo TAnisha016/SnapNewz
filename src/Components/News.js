@@ -19,7 +19,7 @@ export class News extends Component {
 
     constructor() {
         super();
-        console.log("This is a constructor");
+      
         this.state = {
             articles: [],
             loading: false,
@@ -28,45 +28,67 @@ export class News extends Component {
         }; // Add semicolon here
     }
 
+    //begin-
+
     async componentDidMount() {
-        try {
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3925fb8ea05a4ece8fdeca964691785a&page=1&pageSize=${this.props.pageSize}`;
-            this.setState({loading:true});
-            let data = await fetch(url);
-            let parsedData = await data.json();
-            this.setState({
-                articles: parsedData.articles || [],
-                totalResults: parsedData.totalResults || 0,
-                loading:false,
-            });
-        } catch (error) {
-            console.error("Error fetching articles:", error);
-        }
-    }
+  try {
+    this.setState({ loading: true });
+    let url = `https://news-backend-n08m.onrender.com/news?country=${this.props.country}&category=${this.props.category}&page=1&pageSize=${this.props.pageSize}`;
 
-    handlePrevClick = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3925fb8ea05a4ece8fdeca964691785a&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
-        this.setState({loading:true});
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        this.setState({
-            page: this.state.page - 1,
-            articles: parsedData.articles,
-            loading:false
-        });
-    };
 
-    handleNextClick = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=3925fb8ea05a4ece8fdeca964691785a&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
-        this.setState({loading:true});
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        this.setState({
-            page: this.state.page + 1,
-            articles: parsedData.articles,
-            loading:false
-        });
-    };
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({
+      articles: parsedData.articles || [],
+      totalResults: parsedData.totalResults || 0,
+      loading: false,
+      page: 1,  // set page explicitly on mount
+    });
+  } catch (error) {
+    console.error("Error fetching articles:", error);
+  }
+}
+
+handlePrevClick = async () => {
+  try {
+    if (this.state.page <= 1) return; // safety check
+    this.setState({ loading: true });
+    let url = `https://news-backend-n08m.onrender.com/news?country=${this.props.country}&category=${this.props.category}&page=1&pageSize=${this.props.pageSize}`;
+
+
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({
+      page: this.state.page - 1,
+      articles: parsedData.articles,
+      loading: false,
+    });
+  } catch (error) {
+    console.error("Error fetching previous page:", error);
+  }
+};
+
+handleNextClick = async () => {
+  try {
+    if (this.state.page * this.props.pageSize >= this.state.totalResults) return; // safety check
+    this.setState({ loading: true });
+    let url = `https://news-backend-n08m.onrender.com/news?country=${this.props.country}&category=${this.props.category}&page=1&pageSize=${this.props.pageSize}`;
+
+
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({
+      page: this.state.page + 1,
+      articles: parsedData.articles,
+      loading: false,
+    });
+  } catch (error) {
+    console.error("Error fetching next page:", error);
+  }
+};
+
+
+    //end-
 
     render() {
         return (
